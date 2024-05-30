@@ -15,6 +15,10 @@ from utils import utils_sisr as sr
 from utils import utils_image as util
 from utils.utils_deblur import MotionBlurOperator, GaussialBlurOperator
 from scipy import ndimage
+import argparse
+
+
+
 
 # from guided_diffusion import dist_util
 from guided_diffusion.script_util import (
@@ -24,7 +28,7 @@ from guided_diffusion.script_util import (
     args_to_dict,
 )
 
-def main():
+def main(args):
 
     # ----------------------------------------
     # Preparation
@@ -61,7 +65,7 @@ def main():
 
     calc_LPIPS              = True
     use_DIY_kernel          = True
-    blur_mode               = 'Gaussian'          # Gaussian; motion      
+    blur_mode               = args.choice          # Gaussian; motion      
     kernel_size             = 15
     kernel_std              = 3.0 if blur_mode == 'Gaussian' else 0.5
 
@@ -444,5 +448,8 @@ def main():
 
 
 if __name__ == '__main__':
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--choice',default='Gaussian',type=str,help='Deblurring Gaussian blur or motion blur',choices=['Gaussian','motion'])
+    args=parser.parse_args()
 
-    main()
+    main(args)

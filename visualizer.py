@@ -10,14 +10,14 @@ args=parser.parse_args()
 directory = args.dir
 # Sort files by numeric order
 
-file_names = sorted(os.listdir(directory), key=lambda x: int(x.split('_')[-1].split('.')[0]) if '_' in x else int(x.split('.')[0]))
+file_names = os.listdir(directory)
 
 
 # Full paths of the files
 images_path = [os.path.join(directory, file_name) for file_name in file_names if file_name.endswith('.png')]
 
 # Create a GIF
-with imageio.get_writer('output.gif', mode='I', duration=0.5) as writer:
+with imageio.get_writer(args.dir+'_gif.gif', mode='I', duration=0.5) as writer:
     for filename in images_path:
         image = imageio.imread(filename)
         writer.append_data(image)
