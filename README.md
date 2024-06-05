@@ -2,6 +2,8 @@
 
 ## Installation Commands
 ```bash
+git clone --recursive https://github.com/superdianuj/Diff-PIR.git
+cd Diff-PIR
 pip install -r requirements.txt
 # Download pretrained models 
 # (in case google drive doesnot permit, 
@@ -10,10 +12,11 @@ pip install -r requirements.txt
 chmod +x download.sh
 ./download.sh
 
+# drop a folder containing images
 
 # running the main deblurring session
 chmod +x runner.sh
-./runner.sh <path to directory of images> <choose between Gaussian or motion>
+./runner.sh <model name:'diffusion_ffhq_10m' or '256x256_diffusion_uncond' > <path to directory of images> <choose between Gaussian or motion>
 ```
 
 
