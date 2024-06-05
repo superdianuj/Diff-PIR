@@ -17,9 +17,6 @@ from utils.utils_deblur import MotionBlurOperator, GaussialBlurOperator
 from scipy import ndimage
 import argparse
 
-
-
-
 # from guided_diffusion import dist_util
 from guided_diffusion.script_util import (
     NUM_CLASSES,
@@ -34,10 +31,10 @@ def main(args):
     # Preparation
     # ----------------------------------------
 
-    noise_level_img         = 2.75/255.0           # set AWGN noise level for LR image, default: 0
+    noise_level_img         = 12.75/255.0           # set AWGN noise level for LR image, default: 0
     noise_level_model       = noise_level_img       # set noise level of model, default: 0
-    model_name              = 'diffusion_ffhq_10m'  # diffusion_ffhq_10m, 256x256_diffusion_uncond; set diffusino model
-    testset_name            = 'processed_images'            # set testing set,  'imagenet_val' | 'ffhq_val'
+    model_name              = args.model  # diffusion_ffhq_10m, 256x256_diffusion_uncond; set diffusino model
+    testset_name            = 'inputs'            # set testing set,  'imagenet_val' | 'ffhq_val'
     num_train_timesteps     = 1000
     iter_num                = 100                # set number of iterations
     iter_num_U              = 1                 # set number of inner iterations, default: 1
@@ -61,12 +58,12 @@ def main(args):
     skip_type               = 'quad'            # uniform, quad
     eta                     = 0.0               # eta for ddim sampling
     zeta                    = 0.1  
-    guidance_scale          = 2.0   
+    guidance_scale          = 1.0   
 
     calc_LPIPS              = True
     use_DIY_kernel          = True
-    blur_mode               = args.choice          # Gaussian; motion      
-    kernel_size             = 15
+    blur_mode               = args.type          # Gaussian; motion      
+    kernel_size             = 61
     kernel_std              = 3.0 if blur_mode == 'Gaussian' else 0.5
 
     sf                      = 1
@@ -449,7 +446,8 @@ def main(args):
 
 if __name__ == '__main__':
     parser=argparse.ArgumentParser()
-    parser.add_argument('--choice',default='Gaussian',type=str,help='Deblurring Gaussian blur or motion blur',choices=['Gaussian','motion'])
+    parser.add_argument('--model',type=str, choices=['diffusion_ffhq_10m', '256x256_diffusion_uncond'])
+    parser.add_argument('--type',type=str,choices=['Gaussian','motion'])
     args=parser.parse_args()
 
     main(args)

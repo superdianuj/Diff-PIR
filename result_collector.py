@@ -1,9 +1,8 @@
 import os
 import cv2
 
-main_dir='results'
-sub_dir=os.listdir(main_dir)[0]
-dirr=os.path.join(main_dir,sub_dir)
+dirr=os.listdir('results')[0]
+dirr=os.path.join('results',dirr)
 
 new_dir='deblurred_results'
 
@@ -12,7 +11,7 @@ if os.path.exists(new_dir):
 
 os.system(f'mkdir {new_dir}')
 
-img_paths=[img for img in os.listdir(dirr) if img.endswith('_diffusion_ffhq_10m.png')]
+img_paths=[img for img in os.listdir(dirr) if img.endswith('_diffusion_ffhq_10m.png') or img.endswith('_diffusion_uncond.png')]
 
 corr_img_paths=[os.path.join(dirr,img_path) for img_path in img_paths]
 counter=0
